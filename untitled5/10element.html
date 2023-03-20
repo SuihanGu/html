@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用ElementUI</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--2 模板部分-->
+    <el-table :data="books" >
+        <el-table-column label="#" prop="id"></el-table-column>
+        <el-table-column label="name" prop="name"></el-table-column>
+        <el-table-column label="author" prop="author"></el-table-column>
+    </el-table>
+</div>
+
+<script>
+    //对象封装方式减少代码重复
+    let app=new Vue({
+        el:"#app",//容器id
+        data:{//数据部分
+            books:[]
+        },
+        methods:{
+            getData: function  (){
+                self=this;
+                axios.get('books.json')
+                    .then(function (response) {
+                        app.books=response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        },
+        created:function (){//vue创建完毕后调用
+            this.getData();
+        }
+    });
+</script>
+</body>
+</html>

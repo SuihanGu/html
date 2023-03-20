@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Person(name,age){
+        this.name=name;
+        this.age=age;
+    }
+    var p1=new Person("abc",22);
+    var jsonStr=JSON.stringify(p1);
+    console.log(typeof jsonStr);
+    console.log(jsonStr);
+
+</script>
+
+</body>
+</html>

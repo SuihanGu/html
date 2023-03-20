@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用ElementUI</title>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<!--1 存放数据展示部分容器-->
+<div id="app">
+    <!--2 模板部分-->
+    <table>
+        <tr>
+            <th>#</th>
+            <th>name</th>
+            <th>author</th>
+        </tr>
+        <tr v-for="book in books">
+            <td>{{book.id}}</td>
+            <td>{{book.name}}</td>
+            <td>{{book.author}}</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    //对象封装方式减少代码重复
+    let app=new Vue({
+        el:"#app",//容器id
+        data:{//数据部分
+            books:[]
+        },
+        methods:{
+            getData: function  (){
+                self=this;
+                axios.get('books.json')
+                    .then(function (response) {
+                        app.books=response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        },
+        created:function (){//vue创建完毕后调用
+            this.getData();
+        }
+    });
+</script>
+</body>
+</html>

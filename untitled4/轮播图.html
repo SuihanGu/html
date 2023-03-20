@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    .ppt_container{
+      border: 1px solid red;
+      height: 599px;
+      width: 710px;
+      position: relative;
+    }
+    .ppt_zsj li{
+      border: 10px solid white ;
+      border-radius: 10px;
+      width: 0;
+      height: 0;
+      list-style-type: none;
+      display: inline-block;
+    }
+    .ppt_zsj{
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      padding: 0;
+      margin-left: -50px;
+      /*z-index: 2000;*/
+    }
+    .ppt_zsj:nth-child(0){
+      border-color: green;
+
+    }
+    .imgsa{
+      position: absolute;
+
+    }
+  </style>
+</head>
+<body>
+<div class="ppt_container" >
+  <img src="img/zi.png" id="ppt_img">
+
+<ul class="ppt_zsj" id="ppt_zsj">
+  <li id="li-1"></li>
+  <li id="li-2"></li>
+  <li id="li-3"></li>
+</ul></div>
+<script>
+  (function (){
+    /**
+     * 1 周期性切换图片
+     */
+    var imgs=['zi.png','hong.png','lan.png'];
+    var index=1;
+    var imgElem=window.document.getElementById("ppt_img");
+    var interavlId;
+    var lis=document.getElementById("ppt_zsj").getElementsByTagName("li");
+    // 1 定义
+    function changeImg() {
+      interavlId=window.setInterval(function () {
+        index++;
+        if (index>imgs.length){
+          index=1;
+        }
+       imgElem.src="img/"+imgs[index-1];
+        //imgs[index-1].style.zIndex=200;
+        for(var i=0;i<lis.length;i++)
+        {
+          lis[i].style.borderColor="white";
+        }
+        lis[index-1].style.borderColor="green";
+
+      },3000);
+    }
+    changeImg();
+    /**
+     * 2 鼠标移动上去，停止周期性切换
+     */
+    imgElem.addEventListener("mouseover",function () {
+      //停止周期性切换
+      window.clearInterval(interavlId);
+    });
+    /**
+     * 3 鼠标移开后，继续周期性切换
+     */
+    imgElem.addEventListener("mouseout",changeImg);
+    /**
+     * 4 切换到那张图片
+     * 制作界面
+     * 控制显示
+     * 添加行为
+     */
+    /**
+     * * 5 当用户点击小圈时，切换
+     */
+    for (let i=0;i<lis.length;i++){
+
+      lis[i].addEventListener("click",function (evt){
+        index=evt.target.id.split('-')[1];
+        //console.log(evt.target.id.split('_')[i]);
+        imgElem.src="img/"+imgs[evt.target.id.split('-')[1]-1];
+        //imgs[index-1].style.zIndex=200;
+        for(var j=0;j<lis.length;j++){
+          lis[j].style.borderColor="white";
+        }
+        lis[index-1].style.borderColor="green";
+      })
+
+
+
+    }
+
+  })();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/art-template@4.13.2/lib/template-web.js"></script>
+</head>
+<body>
+<div id="app">
+</div>
+<script type="text/html" id="tpl">
+    <table border="1">
+        <tr>
+            <th>#</th>
+            <th>name</th>
+            <th>author</th>
+        </tr>
+        {{each data}}
+        <tr>
+            <td>{{$value.id}}</td>
+            <td>{{$value.name}}</td>
+            <td>{{$value.author}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</script>
+
+<script>
+  var app= {
+      gatData: function () {
+          axios.get("db/user.json").then(response)
+          {
+              showData(response.data);
+          } // .catch(function (error) {
+          //     console.log(error);
+          //
+          //     })
+
+      }
+  }
+          function showData(data) {
+              var html = template("tpl", {data: data});
+              document.querySelector("#app").innerHTML = html;
+          }
+
+</script>
+</body>
+</html>

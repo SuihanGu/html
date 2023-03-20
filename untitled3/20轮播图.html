@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="img/zi.png" alt="" id="ppt_img">
+<script>
+  /**
+   * 1 周期性切换图片
+   *
+   */
+  var imgs=['zi.png','hong.png','lan.png'];
+  var i =0;
+  window.setInterval(function (){
+      //切换图片：修改src的值
+      var immg = window.document.getElementById("ppt_img");
+        if(i>2)
+            i=0;
+        immg.src="img/"+imgs[i];
+        i++;
+
+
+
+  },1000);
+
+</script>
+</body>
+</html>

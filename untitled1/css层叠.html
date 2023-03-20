@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /**
+        选择器:需要表达出对哪些元素起作用
+         */
+        span.rb{
+            color: blue;
+            background-color:black;
+        }
+    </style>
+</head>
+<body>
+  <span>我是默认色</span>
+  <span style="color: red">我是红色</span>
+  <span style="color: blue">我是蓝色</span>
+  <span class="rb c">我是蓝色</span>
+<!--
+优点:可读性好，优先级高
+缺点:只能对当前元素起作用
+-->
+  <span style="color: blue">我也是蓝色</span>
+    <span class="rb">我也是蓝色</span>
+</body>
+
+</html>

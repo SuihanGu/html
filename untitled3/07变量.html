@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //1 定义变量， int c
+    var a;
+    ///2  赋值：a的类型由所赋值的类型定，也称动态数据类型
+    a=8;
+    console.log(typeof a);
+    a='sb';
+    console.log(typeof  a);
+    a=true;
+    console.log(typeof  a);
+
+    //语法不严谨,可以不定义直接使用，慎用
+    b=2;
+    console.log(typeof b);
+    //3 作用域
+    //3.1 全局作用域
+    var c=20;
+    console.log(c);
+    console.log(typeof c);
+    function f(){
+        console.log(c);
+    }
+    //3.2 局部作用域：定义在函数中（var）
+    function g(){
+        var d=30;//如果在函数中没有（var），也是全局变量，但这个函数变量要在函数调用一次后才存在
+    }
+
+
+</script>
+</body>
+</html>

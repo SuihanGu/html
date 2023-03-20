@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js">
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!--    <script type="text/javascript">-->
+<!--        function password() {-->
+<!--            var testV = 1;-->
+<!--            var pass1 = prompt('请输入密码','');-->
+<!--            while (testV < 3) {-->
+<!--                if (!pass1)-->
+<!--                    history.go(-1);-->
+<!--                if (pass1 == "123") {-->
+<!--                    alert('密码正确!');-->
+<!--                    break;-->
+<!--                }-->
+<!--                testV+=1;-->
+<!--                var pass1 =-->
+<!--                    prompt('密码错误!请重新输入:');-->
+<!--            }-->
+<!--            if (pass1!="password" & testV ==3)-->
+<!--                history.go(-1);-->
+<!--            return " ";-->
+<!--        }-->
+<!--        document.write(password());-->
+<!--    </script>-->
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-row :span="24">
+                <el-menu
+                        class="el-menu-demo navbar"
+                        mode="horizontal">
+                    <el-menu-item index="1">
+                        <img src="shh.png" height="55px" width="88px">
+                    </el-menu-item>
+                    <el-submenu index="2">
+                        <template slot="title">书籍管理</template>
+                        <el-menu-item index="2-1">书籍列表</el-menu-item>
+                        <el-menu-item index="2-2">选项2</el-menu-item>
+                        <el-menu-item index="2-3">选项3</el-menu-item>
+                        <el-submenu index="2-4">
+                            <template slot="title">选项4</template>
+                            <el-menu-item index="2-4-1">选项1</el-menu-item>
+                            <el-menu-item index="2-4-2">选项2</el-menu-item>
+                            <el-menu-item index="2-4-3">选项3</el-menu-item>
+                        </el-submenu>
+                    </el-submenu>
+                    <el-menu-item index="3" disabled>消息中心</el-menu-item>
+                    <el-menu-item index="4"><a href="http://localhost:63342/untitled6/11.html" target="_blank">订单管理</a></el-menu-item>
+                </el-menu>
+            </el-row>
+        </el-header>
+        <el-main>
+            <el-row :span="24">
+                <el-card class="box-card ">
+                    <div slot="header" class="clearfix">
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="toAdd()">新增书录</el-button>
+                    </div>
+                    <el-table
+                            v-loading="loading"
+                            :data="books"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="id"
+                                label="ISBN"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="书名"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="author"
+                                label="作者">
+                        </el-table-column>
+                        <el-table-column
+                                prop="typeId"
+                                label="类型">
+                        </el-table-column>
+                        <el-table-column
+                                prop="price"
+                                label="价格">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="操作"
+                                width="100">
+                            <template slot-scope="scope">
+                                <el-button @click="handleDel(scope.row)"
+                                           type="text"><i class="el-icon-delete"></i></el-button>
+                                <el-button type="text" @click="handleEdit(scope.row)"><i class="el-icon-edit"></i></el-button>
+
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <el-pagination
+                            @current-change="handleCurrentChange"
+                            :page-size="20"
+                            :page-count="totalPages"
+                            layout="prev, pager, next"
+                    >
+                    </el-pagination>
+                </el-card>
+            </el-row>
+        </el-main>
+        <el-footer>
+            <el-row :span="24">
+                <el-card class="box-card ">
+
+                    <div style="text-align: center;">山海版权所有&copy;</div>
+                </el-card>
+            </el-row>
+        </el-footer>
+        <el-dialog :title="dlgTitle" :visible.sync="dialogFormVisible" width="50%" center="">
+            <el-form label-width="80px" :model="form">
+                <el-input type="hidden" v-model="form.id"></el-input>
+                <el-form-item label="书目名称">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                </el-form-item>
+
+                <el-form-item label="作者">
+                    <el-input v-model="form.author" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="ISBN">
+                    <el-input v-model="form.id" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="价格">
+                    <el-input v-model="form.price" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="类型">
+                    <el-select v-model="form.typeId" placeholder="请选择类型">
+                        <el-option v-for="type in types" :key="type.id" :label="type.name" :value="type.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="dialogFormVisible = false"
+                               style="margin-left: 28px;">取 消</el-button>
+                    <el-button type="primary" @click="doEdit">确 定</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
+    </el-container>
+</div>
+<script>
+    const app = new Vue({
+        el: "#app",//容器id
+        data: {//数据部分
+            books: [],
+            totalPages: 0,
+            loading: true,
+            types: [],
+            pageNum: 1,
+            pageSize: 2,
+            dialogFormVisible: false,
+            form: {},
+            dlgTitle:"图书新增",
+            isEdit:true
+        },
+        methods: {
+            getData: function () {
+                self = this;
+                this.loading = true;
+                axios.get(`http://localhost:3000/books?_sort=id&_order=!desc&_expand=type&_page=${self.pageNum}&_limit=${self.pageSize}`)
+                    .then(function (response) {
+                        let results = response.headers['x-total-count']
+                            || response.headers['X-Total-Count'];
+                        if (results) {
+                            //计算总页数
+                            app.totalPages = Math.floor((results - 1) /
+                                self.pageSize + 1);
+                        }
+                        app.books = response.data;
+                        app.loading = false;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        app.loading = false;
+                    });
+            },
+            getTypes: function () {
+                axios.get(`http://localhost:3000/types`)
+                    .then(function (response) {
+                        app.types = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            handleCurrentChange(val) {
+                this.pageNum = val;
+                this.getData();
+            },
+            handleDel(row) {
+                this.$confirm('此操作将永久删除该书籍, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.delete("http://localhost:3000/books/" +
+                        row.id).then(function () {
+                        {
+                            app.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                            });
+                            app.getData();
+                        }
+                    }).catch(function () {
+                        app.$message({
+                            type: 'error',
+                            message: '删除失败!'
+                        });
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            toAdd() {
+                app.isEdit=false;
+                app.form = {};
+                app.dlgTitle="新增图书";
+                app.dialogFormVisible = true;
+            },
+            doEdit() {
+                if (self.isEdit) {
+
+                    axios.put(`http://localhost:3000/books/${app.form.id}`, app.form).then(function () {
+                        {
+                            app.$message({
+                                type: 'success',
+                                message: '编辑成功!'
+                            });
+                            app.dialogFormVisible = false;
+                            app.getData();
+                        }
+                    }).catch(function () {
+                        app.$message({
+                            type: 'error',
+                            message: '编辑失败!'
+                        });
+                    })
+
+                } else {
+                    //app.form.id = new Date().getTime();
+                    axios.post(`http://localhost:3000/books`, app.form).then(function () {
+                        {
+                            app.$message({
+                                type: 'success',
+                                message: '添加成功!'
+                            });
+                            app.dialogFormVisible = false;
+                            app.getData(1);
+                        }
+                    }).catch(function () {
+                        app.$message({
+                            type: 'error',
+                            message: '添加失败!'
+                        });
+                    })
+                }
+            },
+            handleEdit(row) {
+                app.isEdit=true;
+                app.form = row;
+                app.dlgTitle="编辑图书";
+                app.dialogFormVisible = true;
+            }
+
+        },
+        created: function () {
+        this.getData();
+        this.getTypes();
+    }
+    });
+
+</script>
+</body>
+</html>

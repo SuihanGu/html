@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shanhai</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        .navbar{
+            border-width: 2px;
+            border-style: solid;
+            border-radius: 25px 25px 55px 5px/5px 55px 25px 25px;
+            border-color: #333 !important;
+            color: rgb(51,51,51) !important;
+
+        }
+        .box-card{
+            border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
+            border-color: #333 !important;
+            border-style: solid !important;
+        }
+        .el-input,.el-select{
+            width:300px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-row :span="24">
+            <el-menu class="el-menu-demo navbar" mode="horizontal">
+                <el-menu-item index="1">
+                    <img src="shh.png" height="55px" width="100px">
+                </el-menu-item>
+                <el-submenu index="2">
+                    <template slot="title">我的工作台</template>
+                    <el-menu-item index="2-1">选项1</el-menu-item>
+                    <el-menu-item index="2-2">选项2</el-menu-item>
+                    <el-menu-item index="2-3">选项3</el-menu-item>
+                    <el-submenu index="2-4">
+                        <template slot="title">选项4</template>
+                        <el-menu-item index="2-4-1">选项1</el-menu-item>
+                        <el-menu-item index="2-4-2">选项2</el-menu-item>
+                        <el-menu-item index="2-4-3">选项3</el-menu-item>
+                    </el-submenu>
+                </el-submenu>
+                <el-menu-item index="3" >消息中心</el-menu-item>
+                <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a> </el-menu-item>
+            </el-menu>
+            </el-row>
+        </el-header>
+
+
+
+        <el-main>
+            <el-row :span="24">
+                <el-card class="box-card">
+            <el-form label-width="80px">
+                <el-form-item label="用户名">
+                    <el-input v-model="user.name"></el-input>
+                </el-form-item>
+                <el-form-item label="年龄">
+                    <el-input v-model="user.age"></el-input>
+                </el-form-item>
+                <el-form-item label="性别">
+                    <el-radio-group v-model="user.gender">
+                        <el-radio label="woman">女</el-radio>
+                        <el-radio label="man">男</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="爱好">
+                    <el-checkbox-group v-model="user.hobby">
+                        <el-checkbox label="ps" name="hobby">爬山</el-checkbox>
+                        <el-checkbox label="zn" name="hobby">抓鸟</el-checkbox>
+                        <el-checkbox label="dy" name="hobby">钓鱼</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label="省份">
+                    <el-select v-model="user.provice" placeholder="活动区域">
+                        <el-option label="河南" value="hn"></el-option>
+                        <el-option label="北京" value="bj"></el-option>
+                    </el-select>
+
+                </el-form-item>
+            </el-form>
+                </el-card>
+            </el-row>
+        </el-main>
+        <el-footer>
+            <el-row :span="24">
+                <el-card class="box-card">
+                    <div style="text-align: center;">版权所有&copy;</div>
+                </el-card>
+            </el-row>
+            <el-link type="primary" >主要链接</el-link>
+
+        </el-footer>
+    </el-container>
+
+</div>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            user:{
+                name:"zhangsan",
+                age:23,
+                gender:"man",
+                provice:"hn",
+                hobby:["ps","dy"]
+            }
+        }
+    });
+</script>
+</body>
+</html>

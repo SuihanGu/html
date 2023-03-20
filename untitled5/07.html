@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用Vue</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <span>不变部分</span>
+    <div>{{now}}</div>
+</div>
+<hr>
+<div id="app2">
+</div>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            now:""
+        },
+        methods:{
+            getTime: function  (){
+                setInterval(function () {
+                    var n=new Date();
+                    vm.now=n.getHours()+":"+n.getMinutes()+":"+n.getSeconds();
+                },1000);
+            }
+        },
+        created:function (){
+            this.getTime();
+        }
+    });
+
+
+    setInterval(function () {
+        let n=new Date();
+        vm.now=n.getHours()+":"+n.getMinutes()+":"+n.getSeconds();
+        document.getElementById("app2").innerHTML="<div>我是不变部分</div>"+now+"</div>"
+    },1000);
+</script>
+</body>
+</html>

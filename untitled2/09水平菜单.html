@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>水平菜单</title>
+    <style>
+        .menu li{
+            display: inline;
+            list-style-type: none;
+            position: relative;
+        }
+        div.menu_item  {
+            /*鼠标移开要隐藏*/
+            display: none;
+            /*visibility: hidden;*/
+            position: absolute;
+            left: 0px;
+            /*菜单项要在菜单下面显示，21px是菜单的高度*/
+            top: 21px;
+        }
+        .menu_container{
+            /*居中对齐方式*/
+            margin: 0 auto;
+            width: 80%;
+            background-color: blue;
+        }
+        /**
+           鼠标移动到li上菜单应该显示
+         */
+        .menu li:hover div{
+            display: block;
+        }
+        /*模拟内容*/
+        .main{
+            height: 300px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div class="menu_container">
+    <ul class="menu" style="padding-left: 0px;margin: 0px;">
+        <li>菜单1
+            <div class="menu_item">
+                添加
+            </div>
+        </li>
+        <li>菜单2
+            <div class="menu_item">
+                修改
+            </div>
+        </li>
+        <li>菜单3
+            <div class="menu_item">
+                删除
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="main"></div>
+</body>
+</html>
