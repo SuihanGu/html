@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>查询数据库</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<script>
+  axios.get('http://localhost:3000/books?name_like=入门')
+          .then(function (response) {
+            console.log(response.data);
+            console.log(response.headers["x-total-count"]);
+          })
+          .catch(function (error) {
+            console.log(error);
+
+          });
+</script>
+</body>

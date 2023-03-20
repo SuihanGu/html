@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>向数据库新增</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<script>
+    axios.post('http://localhost:3000/books',
+        {
+            "id":8,
+            "name": "编剧的自我修养",
+            "typeId": 1,
+            "author": "王倦",
+            "price": "45"
+        }
+    )
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+</script>
+</body>
+</html>

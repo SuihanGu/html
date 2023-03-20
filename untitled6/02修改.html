@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>修改数据库</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<script>
+  axios.put('http://localhost:3000/books/8',
+          {
+            "name": "发盒饭的速度",
+            "typeId": 1,
+            "author": "王倦",
+            "price": "48"
+          }
+  )
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+</script>
+</body>
+</html>

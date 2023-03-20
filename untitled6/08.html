@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shanhai</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        .navbar{
+            border-width: 2px;
+            border-style: solid;
+            border-radius: 25px 25px 55px 5px/5px 55px 25px 25px;
+            border-color: #333 !important;
+            color: rgb(51,51,51) !important;
+
+        }
+        .box-card{
+            border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
+            border-color: #333 !important;
+            border-style: solid !important;
+        }
+        .el-input,.el-select{
+            width:300px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-row :span="24">
+            <el-menu class="el-menu-demo navbar" mode="horizontal">
+                <el-menu-item index="1">
+<!--                    <img src="shh.png" height="55px" width="100px">-->
+                </el-menu-item>
+                <el-submenu index="2">
+                    <template slot="title">我的工作台</template>
+                    <el-menu-item index="2-1">选项1</el-menu-item>
+                    <el-menu-item index="2-2">选项2</el-menu-item>
+                    <el-menu-item index="2-3">选项3</el-menu-item>
+                    <el-submenu index="2-4">
+                        <template slot="title">选项4</template>
+                        <el-menu-item index="2-4-1">选项1</el-menu-item>
+                        <el-menu-item index="2-4-2">选项2</el-menu-item>
+                        <el-menu-item index="2-4-3">选项3</el-menu-item>
+                    </el-submenu>
+                </el-submenu>
+                <el-menu-item index="3" >消息中心</el-menu-item>
+                <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a> </el-menu-item>
+            </el-menu>
+            </el-row>
+        </el-header>
+
+
+
+        <el-main>
+            <el-row :span="24">
+                <el-card class="box-card">
+                    <el-table
+                            v-loading="loading"
+                            :data="books"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="id"
+                                label="#"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="书名"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="author"
+                                label="作者">
+                        </el-table-column>
+                        <el-table-column
+                                prop="typeId"
+                                label="类型">
+                        </el-table-column>
+                        <el-table-column
+                                prop="price"
+                                label="价格">
+                        </el-table-column>
+                    </el-table>
+                    <el-pagination
+                            @current-change="handleCurrentChange"
+                            :page-size="20"
+                            :page-count="totalPages"
+                            layout="prev, pager, next"
+                    >
+                    </el-pagination>
+                </el-card>
+            </el-row>
+        </el-main>
+        <el-footer>
+            <el-row :span="24">
+                <el-card class="box-card">
+                    <div style="text-align: center;">版权所有&copy;</div>
+                </el-card>
+            </el-row>
+            <el-link type="primary" >主要链接</el-link>
+
+        </el-footer>
+    </el-container>
+
+</div>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            books:[]
+
+        },
+        methods:{
+            getData:function () {
+                axios.get('http://localhost:3000/books')
+                    .then(function (response) {
+                        self=this;
+                        this.loading=ture;
+                        console.log(response.data);
+                        console.log(response.headers["x-total-count"]);
+                        self.loading=false;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        self.loading=false;
+                    });
+
+            }
+        },
+        created:function (){
+            this.getData();
+        }
+
+    });
+</script>
+</body>
+</html>
